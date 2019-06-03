@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="colorPrimary">#EBA7AC</color>
+    <color name="colorPrimaryDark">#F4C2C2</color>
+    <color name="colorAccent">#FFC0CB</color>
+
+
+    <!--GRADIENT COLORS-->
+    <color name="gradientWhite">#66FFFFFF</color>
+
+    <!--COLOR_300-->
+    <color name="colorGrey300">#e0e0e0</color>
+
+    <!--COLOR_1000-->
+    <color name="colorWhite1000">#ffffff</color>
+    <color name="colorBlack1000">#000000</color>
+
+    <!--COLOR_400-->
+    <color name="colorPurple_400">#D500F9</color>
+    <color name="colorAmber_400">#FFC400</color>
+    <color name="colorGreen_400">#00E676</color>
+    <color name="colorRed_400">#FF1744</color>
+    
+    <!--COLOR_900-->
+    <color name="colorPurple_900">#4A148C</color>
+    <color name="colorAmber_900">#FF6F00</color>
+    <color name="colorGreen_900">#1B5E20</color>
+    <color name="colorRed_900">#B71C1C</color>
+
+    <color name="placeholder_grey">#AAADC4</color>
+    <color name="white_blur">#88ffffff</color>
+</resources>

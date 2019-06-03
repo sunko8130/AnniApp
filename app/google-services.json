@@ -1,0 +1,48 @@
+{
+  "project_info": {
+    "project_number": "297406957242",
+    "firebase_url": "https://anniapp-d8b22.firebaseio.com",
+    "project_id": "anniapp-d8b22",
+    "storage_bucket": "anniapp-d8b22.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:297406957242:android:5478e282112c46cc",
+        "android_client_info": {
+          "package_name": "com.example.Anni"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "297406957242-5borgcinvfrir6larbfhf6b14825tj6n.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.example.Anni",
+            "certificate_hash": "828be1783a67be964d152f356d3250dc34b646e6"
+          }
+        },
+        {
+          "client_id": "297406957242-0b3e76u9j7gf9d0g8nn61vbu4v7qaci6.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDp3fHAzqfC7ORwre-MsW2AiN-KNl8KnPU"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "297406957242-0b3e76u9j7gf9d0g8nn61vbu4v7qaci6.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

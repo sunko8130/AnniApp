@@ -1,0 +1,25 @@
+<resources>
+    <string name="app_name">AnniApp</string>
+    <string name="button_image">ImageButton</string>
+    <string name="write_your_content_here">Write your content here....</string>
+    <string name="photo_upload">upload</string>
+    <string name="choose_photo">choose photo</string>
+    <string name="imageView">imageView</string>
+    <string name="settingDialogTitle">Required Permissions</string>
+    <string name="settingDialogMessage">This app require permission to use photo feature. Grant them in app settings.</string>
+    <string name="please_choose_anniversary_date">Please Choose A Date</string>
+    <string name="choose_date">choose date</string>
+    <string name="login">Login</string>
+    <string name="happy_anniversary">Happy Anniversary</string>
+
+    <array name="images_type">
+        <item>Single Person Photo</item>
+        <item>Two Person Photo</item>
+        <item>Together Photo</item>
+        <item>Choose Image Types</item>
+    </array>
+
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="love">If the road ahead is no so easy, our love will lead the way for us</string>
+</resources>
