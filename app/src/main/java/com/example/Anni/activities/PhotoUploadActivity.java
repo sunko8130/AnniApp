@@ -9,6 +9,7 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.content.res.ColorStateList;
+import android.database.Cursor;
 import android.graphics.Bitmap;
 import android.graphics.Color;
 import android.graphics.drawable.Drawable;
@@ -63,6 +64,7 @@ import com.karumi.dexter.listener.PermissionRequest;
 import com.karumi.dexter.listener.PermissionRequestErrorListener;
 import com.karumi.dexter.listener.multi.MultiplePermissionsListener;
 
+import java.io.File;
 import java.io.IOException;
 import java.util.List;
 
@@ -104,10 +106,6 @@ public class PhotoUploadActivity extends AppCompatActivity implements View.OnCli
 //        mEditTextContent.requestFocus();
 //        InputMethodManager mgr = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
 //        mgr.showSoftInput(mEditTextContent, InputMethodManager.SHOW_FORCED);
-
-        //click events
-        mButtonUpload.setOnClickListener(this);
-        mButtonPhotoChoose.setOnClickListener(this);
 
 
         //init the spinner
@@ -152,6 +150,10 @@ public class PhotoUploadActivity extends AppCompatActivity implements View.OnCli
         //progress color
         mUploadProgress.setProgressTintList(ColorStateList.valueOf(Color.RED));
 
+        //click events
+        mButtonUpload.setOnClickListener(this);
+        mButtonPhotoChoose.setOnClickListener(this);
+
 //        Drawable progressDrawable = mUploadProgress.getProgressDrawable().mutate();
 //        progressDrawable.setColorFilter(Color.RED, android.graphics.PorterDuff.Mode.SRC_IN);
 //        mUploadProgress.setProgressDrawable(progressDrawable);
@@ -174,9 +176,9 @@ public class PhotoUploadActivity extends AppCompatActivity implements View.OnCli
                 requestMultiplePermissions();
                 return;
             case R.id.button_upload:
-                if (Util.isNetworkAvailable(PhotoUploadActivity.this)){
+                if (Util.isNetworkAvailable(PhotoUploadActivity.this)) {
                     dataUpload();
-                }else {
+                } else {
                     Toast.makeText(this, "There is no internet connection", Toast.LENGTH_SHORT).show();
                 }
                 return;
@@ -302,10 +304,19 @@ public class PhotoUploadActivity extends AppCompatActivity implements View.OnCli
     }
 
     private void imagePickFromGallery() {
-        Intent intent = new Intent();
-        intent.setType("image/*");
-        intent.setAction(Intent.ACTION_GET_CONTENT);
-        startActivityForResult(intent, PICK_IMAGE_REQUEST);
+//        Intent intent = new Intent();
+//        intent.setType("image/*");
+//        intent.setAction(Intent.ACTION_GET_CONTENT);
+//        startActivityForResult(intent, PICK_IMAGE_REQUEST);
+
+//        Intent intent = new Intent(Intent.ACTION_GET_CONTENT);
+//        intent.addCategory(Intent.CATEGORY_OPENABLE);
+//        intent.setType("image/*");
+//        startActivityForResult(Intent.createChooser(intent, "Select Picture"), PICK_IMAGE_REQUEST);
+
+        Intent openGalleryIntent = new Intent(Intent.ACTION_PICK);
+        openGalleryIntent.setType("image/*");
+        startActivityForResult(openGalleryIntent, PICK_IMAGE_REQUEST);
     }
 
     private void openSettingsDialog() {
@@ -337,7 +348,30 @@ public class PhotoUploadActivity extends AppCompatActivity implements View.OnCli
     protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
 
-        if (requestCode == PICK_IMAGE_REQUEST && resultCode == RESULT_OK
+        try {
+            if (resultCode == RESULT_OK) {
+                if (requestCode == PICK_IMAGE_REQUEST) {
+                    mImageUri = data.getData();
+                    // Get the path from the Uri
+//                    final String path = getPathFromURI(mImageUri);
+//                    if (path != null) {
+//                        File f = new File(path);
+//                        mImageUri = Uri.fromFile(f);
+//                    }
+
+                    Bitmap rotateImageBitmap;
+
+                    rotateImageBitmap = ImageRotateAndCompress.handleSamplingAndRotationBitmap(getApplicationContext(), mImageUri);
+                    mUploadImageUri = getImageUri(getApplicationContext(), rotateImageBitmap);
+
+                    Glide.with(getApplicationContext()).load(mUploadImageUri).into(mImagePreview);
+                }
+            }
+        } catch (Exception e) {
+            Log.e("FileSelectorActivity", "File select error", e);
+        }
+
+       /* if (requestCode == PICK_IMAGE_REQUEST && resultCode == RESULT_OK
                 && data != null && data.getData() != null) {
             mImageUri = data.getData();
 
@@ -352,8 +386,22 @@ public class PhotoUploadActivity extends AppCompatActivity implements View.OnCli
                 e.printStackTrace();
             }
 
-        }
+        }else {
+            Log.e("error","error");
+        }*/
 
+    }
+
+    public String getPathFromURI(Uri contentUri) {
+        String res = null;
+        String[] proj = {MediaStore.Images.Media.DATA};
+        Cursor cursor = getContentResolver().query(contentUri, proj, null, null, null);
+        if (cursor.moveToFirst()) {
+            int column_index = cursor.getColumnIndexOrThrow(MediaStore.Images.Media.DATA);
+            res = cursor.getString(column_index);
+        }
+        cursor.close();
+        return res;
     }
 
     private String getFileExtension(Uri uri) {
@@ -362,4 +410,9 @@ public class PhotoUploadActivity extends AppCompatActivity implements View.OnCli
         return mime.getExtensionFromMimeType(cr.getType(uri));
     }
 
+    @Override
+    public void onBackPressed() {
+        super.onBackPressed();
+        finish();
+    }
 }

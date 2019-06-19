@@ -7,14 +7,19 @@ import android.support.annotation.NonNull;
 import android.support.design.widget.BottomSheetBehavior;
 import android.support.design.widget.BottomSheetDialogFragment;
 import android.support.design.widget.CoordinatorLayout;
+import android.util.Log;
 import android.view.View;
 import android.view.ViewTreeObserver;
 import android.widget.TextView;
 
+import com.example.Anni.App;
 import com.example.Anni.R;
+import com.example.Anni.util.MMFontUtils;
 
 
 public class CaptionFragment extends BottomSheetDialogFragment {
+
+    private static final String TAG = "CaptionFragment";
 
     public static CaptionFragment newInstance() {
         CaptionFragment f = new CaptionFragment();
@@ -62,8 +67,12 @@ public class CaptionFragment extends BottomSheetDialogFragment {
         ((View) contentView.getParent()).setBackgroundColor(getResources().getColor(android.R.color.transparent));
         TextView textViewCaption = contentView.findViewById(R.id.txt_caption);
         if (captions != null) {
-            Typeface typeface = Typeface.createFromAsset(getActivity().getAssets(),"fonts/Zawgyi-One.ttf");
-            textViewCaption.setTypeface(typeface);
+
+            if (App.mDetect.isUnicode()) {
+                MMFontUtils.setZawgyiMMFont(textViewCaption);
+            }
+//            Typeface typeface = Typeface.createFromAsset(getActivity().getAssets(),"fonts/Zawgyi-One.ttf");
+//            textViewCaption.setTypeface(typeface);
             textViewCaption.setText(captions);
         }
     }
