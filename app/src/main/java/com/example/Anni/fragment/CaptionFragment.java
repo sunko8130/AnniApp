@@ -7,6 +7,7 @@ import android.support.annotation.NonNull;
 import android.support.design.widget.BottomSheetBehavior;
 import android.support.design.widget.BottomSheetDialogFragment;
 import android.support.design.widget.CoordinatorLayout;
+import android.text.Html;
 import android.util.Log;
 import android.view.View;
 import android.view.ViewTreeObserver;
@@ -15,6 +16,8 @@ import android.widget.TextView;
 import com.example.Anni.App;
 import com.example.Anni.R;
 import com.example.Anni.util.MMFontUtils;
+
+import org.mmtextview.components.MMTextView;
 
 
 public class CaptionFragment extends BottomSheetDialogFragment {
@@ -65,15 +68,10 @@ public class CaptionFragment extends BottomSheetDialogFragment {
         String captions = (String) getArguments().getSerializable("photo_caption");
         int position = getArguments().getInt("position");
         ((View) contentView.getParent()).setBackgroundColor(getResources().getColor(android.R.color.transparent));
-        TextView textViewCaption = contentView.findViewById(R.id.txt_caption);
+        MMTextView textViewCaption = contentView.findViewById(R.id.txt_caption);
         if (captions != null) {
-
-            if (App.mDetect.isUnicode()) {
-                MMFontUtils.setZawgyiMMFont(textViewCaption);
-            }
-//            Typeface typeface = Typeface.createFromAsset(getActivity().getAssets(),"fonts/Zawgyi-One.ttf");
-//            textViewCaption.setTypeface(typeface);
-            textViewCaption.setText(captions);
+            String caption = captions.replace("\n", "<br />");
+            textViewCaption.setText(caption);
         }
     }
 }

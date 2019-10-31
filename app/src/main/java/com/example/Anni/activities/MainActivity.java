@@ -97,7 +97,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         size = res.getDimensionPixelSize(R.dimen.dimen_60dp);
         velocitySlow = res.getDimensionPixelOffset(R.dimen.default_velocity_slow);
         velocityNormal = res.getDimensionPixelOffset(R.dimen.default_velocity_normal);
-        bitmap = Bitmap.createScaledBitmap(BitmapFactory.decodeResource(res, R.drawable.ic_two_person),
+        bitmap = Bitmap.createScaledBitmap(BitmapFactory.decodeResource(res, R.drawable.two_person),
                 size, size, false);
 
         new CountDownTimer(1000, 1000) {
@@ -202,5 +202,11 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             default:
                 break;
         }
+    }
+
+    @Override
+    public void onBackPressed() {
+        super.onBackPressed();
+        finishAffinity();
     }
 }

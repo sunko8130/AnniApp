@@ -22,6 +22,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.Anni.R;
+import com.example.Anni.util.PrefManager;
 import com.example.Anni.util.PreferenceUtils;
 import com.example.Anni.widget.CustomDialog;
 
@@ -43,16 +44,17 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
     private Calendar mCalender;
     private String mChooseDateResult;
     private int mButtonClickTimes = 0, mCountDownTime = 20;
+    private PrefManager prefManager;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         // Checking for first time launch - before calling setContentView()
-        prefs = new PreferenceUtils(this);
-//        if (!prefs.isFirstTimeLaunch()) {
-//            lunchHomeScreen();
-//            finish();
-//        }
+        prefManager = new PrefManager(this);
+        if (!prefManager.isFirstTimeLaunch()) {
+            lunchHomeScreen();
+            finish();
+        }
 
         setContentView(R.layout.activity_login);
 
@@ -76,7 +78,7 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
     }
 
     private void lunchHomeScreen() {
-        prefs.setFirstTimeLaunch(false);
+        prefManager.setFirstTimeLaunch(false);
         startActivity(new Intent(LoginActivity.this, MainActivity.class));
         finish();
     }
@@ -135,15 +137,13 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
             mButtonClickTimes++;
             if (mButtonClickTimes == 1) {
                 if (mChooseDateResult.equalsIgnoreCase("14/6/2018")) {
-                    startActivity(new Intent(LoginActivity.this, MainActivity.class));
-                    finish();
+                    lunchHomeScreen();
                 } else {
                     Toast.makeText(this, "Wrong Date ", Toast.LENGTH_SHORT).show();
                 }
             } else if (mButtonClickTimes == 2) {
                 if (mChooseDateResult.equalsIgnoreCase("14/6/2018")) {
-                    startActivity(new Intent(LoginActivity.this, MainActivity.class));
-                    finish();
+                    lunchHomeScreen();
                 } else {
                     countDownDialog();
                 }
